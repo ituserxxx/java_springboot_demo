@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="org.example.xcx.mapper.UserMapper">
+    <select id="CountAll" resultType="int">
+        select count(1)
+        from users;
+    </select>
+
+    <select id="CountAllActive30" resultType="int">
+        SELECT count(1)
+        FROM users
+        WHERE last_online_time >= DATE_SUB(NOW(), INTERVAL 30 DAY);
+    </select>
+
+    <select id="CountAllNewly30" resultType="int">
+        SELECT count(1)
+        FROM users
+        WHERE created_at >= DATE_SUB(NOW(), INTERVAL 30 DAY);
+    </select>
+    <select id="CountLeave90" resultType="int">
+        SELECT count(1)
+        FROM users
+        WHERE last_online_time &lt;= DATE_SUB(NOW(), INTERVAL 90 DAY);
+    </select>
+
+    <select id="CountAllHasProject" resultType="int">
+        SELECT COUNT(DISTINCT user_id)
+        FROM user_projects;
+    </select>
+</mapper>

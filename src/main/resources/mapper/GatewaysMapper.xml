@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="org.example.xcx.mapper.GatewaysMapper">
+    <select id="FindAllOrderByCountDcc" resultType="org.example.xcx.model.Gateways">
+
+        SELECT count(1) as AsFieldCountNumber,city_code as AsKey,cc.name as AsName
+        From( SELECT c.name as name, ${orderByField}  as city_code FROM gateways left join area c on ${orderByField}   = c.code_str where ${orderByField}   IS NOT NULL ) as cc
+        group by cc.city_code,cc.name
+        order by AsFieldCountNumber DESC
+    </select>
+    <select id="CountAll" resultType="int">
+        SELECT count(1)
+        FROM gateways
+    </select>
+    <select id="Last6MonthsDccStat" resultType="org.example.xcx.model.Gateways">
+        SELECT DATE_FORMAT(`created_at`, '%Y-%m') AS AsKey,
+               COUNT(*)                           AS AsFieldCountNumber
+        FROM gateways
+        WHERE `created_at` >= DATE_FORMAT(DATE_SUB(NOW(), INTERVAL 6 MONTH), '%Y-%m-01')
+        GROUP BY DATE_FORMAT(`created_at`, '%Y-%m')
+        ORDER BY asKey;
+    </select>
+
+    <select id="FindAllGatewaysId" resultType="org.example.xcx.model.Gateways">
+        SELECT id
+        FROM gateways
+    </select>
+</mapper>

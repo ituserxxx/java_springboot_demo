@@ -1,0 +1,18 @@
+stages:         
+  - deploy
+
+deploy:run_app:
+  stage: deploy
+  retry:
+    max: 2
+  timeout: 2 minutes
+  only:
+    - master
+  script:
+    - sudo git branch
+    - sudo cp Dockerfile start.sh ytwl_admin.jar /home/ytwl_admin/
+    - cd /home/ytwl_admin/
+    - sudo chmod +x ./start.sh
+    - sudo ./start.sh
+  tags:
+    - utcloud

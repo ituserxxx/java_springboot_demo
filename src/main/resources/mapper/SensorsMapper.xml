@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="org.example.xcx.mapper.SensorsMapper">
+    <select id="CountAll" resultType="int">
+        select count(1)
+        from sensors;
+    </select>
+    <select id="CountAllInType" resultType="org.example.xcx.model.Sensors">
+        select count(1) as AsFieldCountNumber,`type` AS `AsFieldKey`
+        from sensors where  `type` in ("air","w_level","w_quality","w_ph","w_oxygen")  group by `type`
+    </select>
+</mapper>

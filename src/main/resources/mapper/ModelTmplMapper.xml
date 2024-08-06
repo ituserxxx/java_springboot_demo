@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="org.example.xcx.mapper.ModelTmplMapper">
+    <select id="selectPage" resultType="org.example.xcx.model.ModelTmpl">
+        select *
+        from model_tmpl
+        ORDER BY updated_time desc
+            LIMIT #{offset}, #{pageSize};
+    </select>
+    <select id="countTotalModels" resultType="int">
+        SELECT COUNT(1)
+        FROM model_tmpl
+    </select>
+</mapper>
